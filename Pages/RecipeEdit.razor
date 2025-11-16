@@ -94,9 +94,28 @@
         var file = e.File;
         if (file != null)
         {
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024).ReadAsync(buffer);
-            recipe.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+            try
+            {
+                // 画像を800x800にリサイズ
+                var resizedImage = await file.RequestImageFileAsync(file.ContentType, 800, 800);
+                var buffer = new byte[resizedImage.Size];
+                await resizedImage.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024).ReadAsync(buffer);
+                recipe.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+            }
+            catch (Exception ex)
+            {
+                // エラーが出た場合は元のサイズでアップロード
+                try
+                {
+                    var buffer = new byte[file.Size];
+                    await file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024).ReadAsync(buffer);
+                    recipe.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+                }
+                catch
+                {
+                    Console.WriteLine($"画像アップロードエラー: {ex.Message}");
+                }
+            }
         }
     }
 

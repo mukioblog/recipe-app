@@ -114,12 +114,12 @@
             await RecipeService.UpdateRecipeAsync(recipe);
         }
 
-        Navigation.NavigateTo("/recipes");
+        Navigation.NavigateTo("recipes");
     }
 
     private void Cancel()
     {
-        Navigation.NavigateTo("/recipes");
+        Navigation.NavigateTo("recipes");
     }
 
     private async Task DeleteRecipe()

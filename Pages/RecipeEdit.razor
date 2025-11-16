@@ -127,7 +127,7 @@
         if (Id != null)
         {
             await RecipeService.DeleteRecipeAsync(Id.Value);
-            Navigation.NavigateTo("/recipes");
+            Navigation.NavigateTo("recipes");
         }
     }
 }

@@ -1,17 +1,31 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<div class="top-row ps-3 navbar navbar-dark" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">🍳 レシピアプリ</a>
+        <a class="navbar-brand" href="/recipe-app/" style="font-size: 1.3rem; font-weight: bold;">
+            🍳 レシピアプリ
+        </a>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()" style="background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="recipes" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> レシピ一覧
+            <NavLink class="nav-link" href="/recipe-app/recipes" Match="NavLinkMatch.All" style="border-radius: 8px; margin: 8px; transition: all 0.3s;">
+                <span style="font-size: 1.2rem;">🏠</span> レシピ一覧
             </NavLink>
         </div>
     </nav>
 </div>
+
+<style>
+    .nav-link:hover {
+        background-color: rgba(102, 126, 234, 0.1) !important;
+        transform: translateX(5px);
+    }
+    
+    .nav-link.active {
+        background-color: rgba(102, 126, 234, 0.2) !important;
+        font-weight: bold;
+    }
+</style>

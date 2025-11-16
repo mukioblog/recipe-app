@@ -6,28 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RecipeApp</title>
     <base href="/recipe-app/" />
-    <link href="_framework/dotnet.dwi9slcdqu.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-7dfzdnY/R6AA4Vr4BSdG8vgRTDaNkouCF38RY4sXddg=" />
+    <link href="_framework/dotnet.vlo917arys.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-02HUpvr1sXV014/Xas2cBoZ73pjESgErYjFjMdoz/cw=" />
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="RecipeApp.styles.css" rel="stylesheet" />
+    <script>
+        (function(){
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect != location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.dwi9slcdqu.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.xanz2e7ksm.js",
-    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.o0qy896u8v.js"
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.o0qy896u8v.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.vlo917arys.js"
   },
   "scopes": {},
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.dwi9slcdqu.js": "sha256-7dfzdnY/R6AA4Vr4BSdG8vgRTDaNkouCF38RY4sXddg=",
-    "./_framework/dotnet.js": "sha256-7dfzdnY/R6AA4Vr4BSdG8vgRTDaNkouCF38RY4sXddg=",
+    "./_framework/dotnet.js": "sha256-02HUpvr1sXV014/Xas2cBoZ73pjESgErYjFjMdoz/cw=",
     "./_framework/dotnet.native.js": "sha256-uQpMf2vCY3ZTY+nV2gmp8VdAe67PW6h1gInkE7r/PLY=",
     "./_framework/dotnet.native.xanz2e7ksm.js": "sha256-uQpMf2vCY3ZTY+nV2gmp8VdAe67PW6h1gInkE7r/PLY=",
     "./_framework/dotnet.runtime.js": "sha256-yJvgPPUUvavYVmu9VD/fYtMcoEnLVaB0Cr7JAE29btw=",
-    "./_framework/dotnet.runtime.o0qy896u8v.js": "sha256-yJvgPPUUvavYVmu9VD/fYtMcoEnLVaB0Cr7JAE29btw="
+    "./_framework/dotnet.runtime.o0qy896u8v.js": "sha256-yJvgPPUUvavYVmu9VD/fYtMcoEnLVaB0Cr7JAE29btw=",
+    "./_framework/dotnet.vlo917arys.js": "sha256-02HUpvr1sXV014/Xas2cBoZ73pjESgErYjFjMdoz/cw="
   }
 }</script>
 </head>

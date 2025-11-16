@@ -1,0 +1,12 @@
+﻿@page "/"
+
+<PageTitle>レシピアプリ</PageTitle>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateTo("/recipes");
+    }
+}
+
+@inject NavigationManager Navigation

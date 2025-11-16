@@ -1,0 +1,133 @@
+@using RecipeApp.Models
+@using RecipeApp.Services
+@page "/recipe/new"
+@page "/recipe/edit/{Id:guid}"
+@inject RecipeService RecipeService
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == null ? "新しいレシピ" : "レシピ編集")</PageTitle>
+
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <h1>@(Id == null ? "新しいレシピ" : "レシピ編集")</h1>
+
+    <EditForm Model="recipe" OnValidSubmit="SaveRecipe">
+        <div class="mb-3">
+            <label class="form-label">タイトル</label>
+            <InputText class="form-control" @bind-Value="recipe.Title" placeholder="例: ハンバーグ" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">写真</label>
+            <InputFile OnChange="HandleImageUpload" accept="image/*" class="form-control" />
+            @if (!string.IsNullOrEmpty(recipe.ImageBase64))
+            {
+                <img src="@recipe.ImageBase64" style="max-width: 300px; margin-top: 10px;" alt="プレビュー" />
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">材料(1行に1つずつ)</label>
+            <textarea class="form-control" rows="5" @bind="ingredientsText" placeholder="例:&#10;豚ひき肉 300g&#10;玉ねぎ 1個&#10;卵 1個"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">手順(1行に1つずつ)</label>
+            <textarea class="form-control" rows="8" @bind="stepsText" placeholder="例:&#10;1. 玉ねぎをみじん切りにする&#10;2. 材料を全て混ぜる&#10;3. 形を整えて焼く"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">カロリー</label>
+                <InputText class="form-control" @bind-Value="recipe.Calories" placeholder="例: 500kcal" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">調理時間</label>
+                <InputText class="form-control" @bind-Value="recipe.CookingTime" placeholder="例: 30分" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">何人分</label>
+                <InputText class="form-control" @bind-Value="recipe.Servings" placeholder="例: 2人分" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">メモ・その他</label>
+            <textarea class="form-control" rows="3" @bind="recipe.Notes" placeholder="ポイントや注意点など"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <button type="button" class="btn btn-secondary" @onclick="Cancel">キャンセル</button>
+            @if (Id != null)
+            {
+                <button type="button" class="btn btn-danger" @onclick="DeleteRecipe">削除</button>
+            }
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    private Recipe recipe = new();
+    private string ingredientsText = string.Empty;
+    private string stepsText = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            var recipes = await RecipeService.GetAllRecipesAsync();
+            var existingRecipe = recipes.FirstOrDefault(r => r.Id == Id);
+            if (existingRecipe != null)
+            {
+                recipe = existingRecipe;
+                ingredientsText = string.Join("\n", recipe.Ingredients);
+                stepsText = string.Join("\n", recipe.Steps);
+            }
+        }
+    }
+
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024).ReadAsync(buffer);
+            recipe.ImageBase64 = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+        }
+    }
+
+    private async Task SaveRecipe()
+    {
+        recipe.Ingredients = ingredientsText.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+        recipe.Steps = stepsText.Split('\n', StringSplitOptions.RemoveEmptyEntries).ToList();
+
+        if (Id == null)
+        {
+            await RecipeService.SaveRecipeAsync(recipe);
+        }
+        else
+        {
+            await RecipeService.UpdateRecipeAsync(recipe);
+        }
+
+        Navigation.NavigateTo("/recipes");
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/recipes");
+    }
+
+    private async Task DeleteRecipe()
+    {
+        if (Id != null)
+        {
+            await RecipeService.DeleteRecipeAsync(Id.Value);
+            Navigation.NavigateTo("/recipes");
+        }
+    }
+}

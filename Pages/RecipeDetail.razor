@@ -1,0 +1,117 @@
+@using RecipeApp.Models
+@using RecipeApp.Services
+@page "/recipe/{Id:guid}"
+@inject RecipeService RecipeService
+@inject NavigationManager Navigation
+
+<PageTitle>@recipe?.Title</PageTitle>
+
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    @if (recipe == null)
+    {
+        <p>読み込み中...</p>
+    }
+    else
+    {
+        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn btn-secondary" @onclick="GoBack">← 戻る</button>
+            <button class="btn btn-primary" @onclick="Edit">編集</button>
+        </div>
+
+        <h1>@recipe.Title</h1>
+
+        @if (!string.IsNullOrEmpty(recipe.ImageBase64))
+        {
+            <img src="@recipe.ImageBase64" style="width: 100%; max-width: 600px; border-radius: 8px; margin: 20px 0;" alt="@recipe.Title" />
+        }
+
+        <div style="display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+            @if (!string.IsNullOrEmpty(recipe.Calories))
+            {
+                <div>
+                    <strong>カロリー:</strong> @recipe.Calories
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(recipe.CookingTime))
+            {
+                <div>
+                    <strong>調理時間:</strong> @recipe.CookingTime
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(recipe.Servings))
+            {
+                <div>
+                    <strong>分量:</strong> @recipe.Servings
+                </div>
+            }
+        </div>
+
+        <hr />
+
+        <h3>材料</h3>
+        @if (recipe.Ingredients.Any())
+        {
+            <ul>
+                @foreach (var ingredient in recipe.Ingredients)
+                {
+                    <li>@ingredient</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>材料が登録されていません</p>
+        }
+
+        <hr />
+
+        <h3>手順</h3>
+        @if (recipe.Steps.Any())
+        {
+            <ol>
+                @foreach (var step in recipe.Steps)
+                {
+                    <li style="margin-bottom: 10px;">@step</li>
+                }
+            </ol>
+        }
+        else
+        {
+            <p>手順が登録されていません</p>
+        }
+
+        @if (!string.IsNullOrEmpty(recipe.Notes))
+        {
+            <hr />
+            <h3>メモ</h3>
+            <p style="white-space: pre-wrap;">@recipe.Notes</p>
+        }
+
+        <div style="margin-top: 20px; color: #666; font-size: 0.9em;">
+            作成日: @recipe.CreatedAt.ToString("yyyy年MM月dd日")
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private Recipe? recipe;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var recipes = await RecipeService.GetAllRecipesAsync();
+        recipe = recipes.FirstOrDefault(r => r.Id == Id);
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/recipes");
+    }
+
+    private void Edit()
+    {
+        Navigation.NavigateTo($"/recipe/edit/{Id}");
+    }
+}

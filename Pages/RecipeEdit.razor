@@ -2,7 +2,7 @@
 @using RecipeApp.Services
 @page "/recipe/new"
 @page "/recipe/edit/{Id:guid}"
-@inject RecipeService RecipeService
+@inject SupabaseRecipeService RecipeService
 @inject NavigationManager Navigation
 
 <PageTitle>@(Id == null ? "新しいレシピ" : "レシピ編集")</PageTitle>

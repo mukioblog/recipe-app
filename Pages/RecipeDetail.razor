@@ -1,7 +1,7 @@
 @using RecipeApp.Models
 @using RecipeApp.Services
 @page "/recipe/{Id:guid}"
-@inject RecipeService RecipeService
+@inject SupabaseRecipeService RecipeService
 @inject NavigationManager Navigation
 
 <PageTitle>@recipe?.Title</PageTitle>

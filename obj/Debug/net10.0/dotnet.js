@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "RecipeApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-CLaWxR3JNRkfdNKqM8T3j9FFv86o3SZl60i48IuAXUE=",
+    "hash": "sha256-lS9IRIxttDBEzzILbvWG/IldXPTXVV6KOxszEgbC3k4=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -1044,15 +1044,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "RecipeApp.wasm",
-        "name": "RecipeApp.1lz943zv87.wasm",
-        "integrity": "sha256-m4OlCITOPcGDBuLixuw+8ve+nTDYW8Qw0yaLvv0S9+g="
+        "name": "RecipeApp.zpeibkh1x1.wasm",
+        "integrity": "sha256-+dmA3CSIWEy+yPsQOEhmAP+MDrqShTiNHcMQXQw3GpI="
       }
     ],
     "pdb": [
       {
         "virtualPath": "RecipeApp.pdb",
-        "name": "RecipeApp.w0378gvds1.pdb",
-        "integrity": "sha256-8HxH+UHZdC7dLYf7buY7GYZVSjh7rKPj9/5OA/c44DA="
+        "name": "RecipeApp.39hmjtunn1.pdb",
+        "integrity": "sha256-KdiN7XcYq0KKgWfv5Iax4h+mMppPiCCnMkkBWEhy/kg="
       }
     ],
     "libraryInitializers": [
@@ -1067,6 +1067,9 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
     ]
   },
   "debugLevel": -1,
+  "appsettings": [
+    "../appsettings.json"
+  ],
   "globalizationMode": "sharded",
   "extensions": {
     "blazor": {}
